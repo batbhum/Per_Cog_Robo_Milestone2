@@ -1,0 +1,125 @@
+# How to Add LiDAR + GPS + Compass to Your E-puck .wbt File
+# ============================================================
+#
+# Open your existing .wbt file in a text editor.
+# Find the E-puck node — it looks like:
+#
+#   E-puck {
+#     translation ...
+#     rotation ...
+#     name "e-puck"
+#     controller "..."
+#     ...
+#   }
+#
+# STEP 1: Change the controller name to "slam_controller"
+# -------------------------------------------------------
+#   controller "slam_controller"
+#
+#
+# STEP 2: Add LiDAR, GPS, and Compass inside the E-puck's children []
+# -------------------------------------------------------------------
+# Find the line:   children [
+# (it may already have a camera, LEDs, etc.)
+# Add these three blocks INSIDE the children [ ... ] section:
+#
+#     Lidar {
+#       translation 0 0 0.034
+#       rotation 0 0 1 0
+#       name "lidar"
+#       horizontalResolution 360
+#       fieldOfView 6.2832
+#       numberOfLayers 1
+#       maxRange 1.5
+#       noise 0.0
+#     }
+#     GPS {
+#       name "gps"
+#     }
+#     Compass {
+#       name "compass"
+#     }
+#
+#
+# STEP 3: Match WORLD_W and WORLD_H in slam_controller.py
+# -------------------------------------------------------
+# Open slam_controller.py and update:
+#   WORLD_W = <your arena width in meters>
+#   WORLD_H = <your arena height in meters>
+#
+# For a standard E-puck arena, common sizes are 1.0m x 1.0m or 1.2m x 1.2m.
+# Check your RectangleArena or arena floor size in the .wbt file.
+#
+#
+# STEP 4: Check coordinate plane
+# -------------------------------------------------------
+# By default WeBots E-puck moves in the X-Z plane (Y is up).
+# If your GPS gives movement in X and Z:
+#   true_x = gv[0], true_y = gv[2]   <-- already set in slam_controller.py
+#
+# If your world is set up so the robot moves in X-Y:
+#   change to: true_x = gv[0], true_y = gv[1]
+#   and compass: return math.atan2(compass_vals[1], compass_vals[0])
+#
+# To check: run the simulation, print gps.getValues() and move the robot manually.
+# Watch which values change.
+#
+#
+# STEP 5: Folder structure
+# -------------------------------------------------------
+# Your WeBots project should look like:
+#
+#   your_project/
+#   ├── worlds/
+#   │   └── your_world.wbt          ← your existing world (modified above)
+#   └── controllers/
+#       └── slam_controller/
+#           ├── slam_controller.py  ← main controller (entry point)
+#           ├── utils.py
+#           ├── occupancy_grid.py
+#           ├── ekf_slam.py
+#           ├── landmark_extraction.py
+#           ├── exploration.py
+#           └── map_display.py
+#
+#
+# STEP 6: Install pygame
+# -------------------------------------------------------
+#   pip install pygame
+#
+# The SLAM map will appear in a SEPARATE PYGAME WINDOW
+# while WeBots runs the simulation.
+#
+#
+# STEP 7: Run
+# -------------------------------------------------------
+# 1. Open WeBots
+# 2. Open your .wbt file
+# 3. Press Play ▶
+# 4. A pygame window will open showing the growing occupancy grid map
+#
+#
+# TROUBLESHOOTING
+# -------------------------------------------------------
+# Problem: "DeviceNotFound: lidar"
+#   Fix: Make sure you added the Lidar node and named it "lidar"
+#
+# Problem: Map builds in wrong orientation / robot pose looks wrong
+#   Fix: Try swapping gv[2] ↔ gv[1] for true_y (see STEP 4)
+#
+# Problem: Robot ignores walls / goes through them
+#   Fix: Reduce obstacle_threshold in slam_controller.py (try 0.08)
+#        or increase maxRange in the Lidar node
+#
+# Problem: Map never fills in / all gray
+#   Fix: Increase MAX_LIDAR in slam_controller.py to match your lidar maxRange
+#
+# Problem: Too many or too few landmarks
+#   Fix: Adjust dist_threshold and min_seg_len in the extract_landmarks() call
+#
+# SWITCHING TO NOISY MODE
+# -------------------------------------------------------
+# Once SLAM works in ideal mode, open slam_controller.py and set:
+#   NOISY = True
+# This switches from GPS to odometry dead-reckoning.
+# The EKF will correct drift using landmark observations.
