@@ -48,7 +48,7 @@ You will need Webots (R2025a or compatible) installed on your machine. You also 
 ```bash
 pip install numpy pygame
 ```
-2. Launching:
+**2. Launching:**
 
 Open the .wbt world file located in the worlds directory using Webots.
 
@@ -63,7 +63,10 @@ Kittibhum (6638018521)
 
 Nuntis (6638103121)
 
+
 Course: 2147331.i Perception of Cognitive Robots - Chulalongkorn University
+
+
 <img width="1160" height="1148" alt="Screenshot 2026-03-20 233308" src="https://github.com/user-attachments/assets/c33ca6b7-8f6d-49ac-ba30-61792461c0d1" />
 <img width="1662" height="1219" alt="Screenshot 2026-03-20 233250" src="https://github.com/user-attachments/assets/debd1f04-f8f8-4dab-859c-3136575c72f0" />
 <img width="1281" height="236" alt="Screenshot 2026-03-20 233231" src="https://github.com/user-attachments/assets/4b63f134-9f39-4e02-bff3-4f5473c3bcac" />
