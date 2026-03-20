@@ -47,6 +47,7 @@ This repository contains the Milestone 2 submission for the Perception of Cognit
 You will need Webots (R2025a or compatible) installed on your machine. You also need to install the two required Python libraries for math and UI rendering:
 ```bash
 pip install numpy pygame
+```
 2. Launching:
 
 Open the .wbt world file located in the worlds directory using Webots.
