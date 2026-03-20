@@ -67,12 +67,23 @@ Nuntis (6638103121)
 Course: 2147331.i Perception of Cognitive Robots - Chulalongkorn University
 
 
+**The Environment**
+"First, here is an overhead view of our custom 6x6 meter Webots arena. If you look at the Scene Tree, you can see we built this environment completely from scratch, including static walls, dynamic moving balls, and our yellow target goal."
 <img width="1160" height="1148" alt="Screenshot 2026-03-20 233308" src="https://github.com/user-attachments/assets/c33ca6b7-8f6d-49ac-ba30-61792461c0d1" />
+**The Configuration**
+"To set up the run, here is a look at our configuration code. You can see we established a highly precise 5-centimeter grid resolution and fed the specific target coordinates—5.0, 5.0—directly into our A* planner."
 <img width="1662" height="1219" alt="Screenshot 2026-03-20 233250" src="https://github.com/user-attachments/assets/debd1f04-f8f8-4dab-859c-3136575c72f0" />
-<img width="1281" height="236" alt="Screenshot 2026-03-20 233231" src="https://github.com/user-attachments/assets/4b63f134-9f39-4e02-bff3-4f5473c3bcac" />
-<img width="1415" height="820" alt="Screenshot 2026-03-20 233224" src="https://github.com/user-attachments/assets/5a11cd19-3d31-46df-8a94-9efe3ec9c0fd" />
-<img width="2559" height="1520" alt="Screenshot 2026-03-20 233218" src="https://github.com/user-attachments/assets/75344ba4-88e2-48f4-a51d-374b78a29c35" />
+**Live Navigation**
+"This shows our system actively navigating. On the left is the physical simulation, and on the right is our custom PyGame dashboard. You can see the A* algorithm actively mapping the green trajectory. Notice the camera feed—it successfully identifies and tracks the moving magenta ball, ensuring it doesn't accidentally corrupt our static map."
 <img width="2559" height="1532" alt="Screenshot 2026-03-20 233147" src="https://github.com/user-attachments/assets/ad0e839c-c0ec-41c4-8cc0-a97ed700450f" />
-<img width="1447" height="813" alt="Screenshot 2026-03-20 221231" src="https://github.com/user-attachments/assets/941d214f-3c89-4615-9219-cf00c3c30837" />
+**Under the Hood**
+"If we look at the console output, you can watch our local planner executing the route. The distance to the goal steadily decreases. Most importantly, notice that recent_replans stays at 0. This proves our C-Space wall-inflation logic successfully kept the robot safely away from corners, preventing any emergency safety overrides."
+<img width="1281" height="236" alt="Screenshot 2026-03-20 233231" src="https://github.com/user-attachments/assets/4b63f134-9f39-4e02-bff3-4f5473c3bcac" />
+
+**Mission Success**
+"Finally, here is the moment of completion. The robot safely reaches the yellow block, our computer vision pipeline successfully draws a bounding box around the target, and the console confirms the final 'GOAL REACHED' state."
+<img width="2559" height="1520" alt="Screenshot 2026-03-20 233218" src="https://github.com/user-attachments/assets/75344ba4-88e2-48f4-a51d-374b78a29c35" />
+<img width="1415" height="820" alt="Screenshot 2026-03-20 233224" src="https://github.com/user-attachments/assets/5a11cd19-3d31-46df-8a94-9efe3ec9c0fd" />
+
 <img width="959" height="950" alt="Screenshot 2026-03-20 220437" src="https://github.com/user-attachments/assets/6ba0c376-5c3f-4ad1-9236-64cbed24cb9f" />
 <img width="324" height="672" alt="Screenshot 2026-03-20 233328" src="https://github.com/user-attachments/assets/70035596-6518-49e5-9f40-f5ce127d6909" />
